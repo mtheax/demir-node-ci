@@ -33,6 +33,9 @@ jobs:
 
       - name: Copy project to EC2
         run: |
+          ssh -i ~/.ssh/ec2_key \
+            "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}" \
+            'mkdir -p ~/app'
           rsync -avz --exclude='.git' \
             -e "ssh -i ~/.ssh/ec2_key" \
             ./ "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app/"
